@@ -20,6 +20,18 @@ builder.Services.AddIdentity<Usuario, IdentityRole>()
     .AddEntityFrameworkStores<GestionMenuDbContext>()
     .AddDefaultTokenProviders();
 
+// ? Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000") // Cambia esto por la URL del frontend si es diferente.
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 // Configuración de autenticación JWT
 builder.Services.AddAuthentication(options =>
 {
@@ -50,6 +62,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// ? Activar CORS antes de la autenticación
+app.UseCors("AllowFrontend");
+
 // Activar autenticación y autorización
 app.UseAuthentication();
 app.UseAuthorization();
@@ -57,5 +72,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 
 
