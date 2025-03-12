@@ -1,0 +1,13 @@
+# Ignorar la carpeta de configuración de Visual Studio
+.vs/
+
+# Ignorar archivos de construcción
+bin/
+obj/
+
+# Archivos de configuración de usuario
+*.user
+*.suo
+
+# Archivos de base de datos locales
+*.db
